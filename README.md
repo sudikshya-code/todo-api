@@ -12,7 +12,7 @@ Postman
 dotenv
 Setup
 1. Clone the repository
-git clone [(https://github.com/)]
+git clone [(https://github.com/sudikshya-code/todo-api)]
 cd todo-api
 2. Install dependencies
 npm install
@@ -61,4 +61,5 @@ The API includes request validation and global error-handling middleware. Invali
 
 GitHub Repository
 
-(https://github.com/)
+ (https://github.com/sudikshya-code/todo-api)
+ 
