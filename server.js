@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 
 const taskRoutes = require("./src/routes/taskRoutes");
+const authRoutes = require("./src/routes/authRoutes");
 const errorHandler = require("./src/middleware/errorHandler");
 
 dotenv.config();
@@ -21,7 +22,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/tasks", taskRoutes);
-
+app.use("/api/auth", authRoutes);
 app.use((req, res) => {
   res.status(404).json({
     success: false,

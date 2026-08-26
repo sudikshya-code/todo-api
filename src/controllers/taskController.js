@@ -3,7 +3,10 @@ const Task = require("../models/Task");
 // CREATE TASK
 const createTask = async (req, res, next) => {
   try {
-    const task = await Task.create(req.body);
+    const task = await Task.create({
+      ...req.body,
+      user: req.user.userId,
+    });
 
     res.status(201).json({
       success: true,
@@ -17,7 +20,9 @@ const createTask = async (req, res, next) => {
 // GET ALL TASKS
 const getTasks = async (req, res, next) => {
   try {
-    const filter = {};
+    const filter = {
+      user: req.user.userId,
+    };
 
     if (req.query.completed !== undefined) {
       filter.isCompleted = req.query.completed === "true";
@@ -38,7 +43,10 @@ const getTasks = async (req, res, next) => {
 // GET ONE TASK
 const getTask = async (req, res, next) => {
   try {
-    const task = await Task.findById(req.params.id);
+    const task = await Task.findOne({
+      _id: req.params.id,
+      user: req.user.userId,
+    });
 
     if (!task) {
       return res.status(404).json({
@@ -59,8 +67,11 @@ const getTask = async (req, res, next) => {
 // UPDATE TASK
 const updateTask = async (req, res, next) => {
   try {
-    const task = await Task.findByIdAndUpdate(
-      req.params.id,
+    const task = await Task.findOneAndUpdate(
+      {
+        _id: req.params.id,
+        user: req.user.userId,
+      },
       req.body,
       {
         new: true,
@@ -87,7 +98,10 @@ const updateTask = async (req, res, next) => {
 // DELETE TASK
 const deleteTask = async (req, res, next) => {
   try {
-    const task = await Task.findByIdAndDelete(req.params.id);
+    const task = await Task.findOneAndDelete({
+      _id: req.params.id,
+      user: req.user.userId,
+    });
 
     if (!task) {
       return res.status(404).json({
